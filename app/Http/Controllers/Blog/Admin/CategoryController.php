@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
-use App\Http\Controllers\Blog\BaseController;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
@@ -15,7 +13,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -25,7 +23,7 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -36,19 +34,9 @@ class CategoryController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        dd(__METHOD__);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +46,7 @@ class CategoryController extends BaseController
      */
     public function edit($id)
     {
-        //
+        dd(__METHOD__);
     }
 
     /**
@@ -70,17 +58,7 @@ class CategoryController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        dd(__METHOD__);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
