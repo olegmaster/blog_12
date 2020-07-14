@@ -29,6 +29,10 @@
                                             {{$page->title}}
                                         </a>
                                     </td>
+                                    <td @if(in_array($page->parent_id, [0,1])) style="color:red;" @endif >
+
+                                        {{$page->parent_id}}
+                                    </td>
                                     <td>{{$page->slug}}</td>
                                     <td>{{$page->description}}</td>
                                     <td>{{$page->created_at}}</td>
@@ -36,7 +40,7 @@
                                 </tr>
                             @endforeach
                         </table>
-                        @if($paginator->total() > $paginator->count())
+                        @if($paginator->total() > $paginator->count() && $paginator->count() != 0)
                             {{$paginator->links()}}
                         @endif
                     </div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9cab259f92d021f4077831bd7ae020b",
+    "content-hash": "a80ac6d43168d5bae31fa6a86487298a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -700,6 +700,103 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "itstructure/laravel-grid-view",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itstructure/laravel-grid-view.git",
+                "reference": "6b9cf2bc1f9daf9d5c14648dd720ff3d3b865934"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itstructure/laravel-grid-view/zipball/6b9cf2bc1f9daf9d5c14648dd720ff3d3b865934",
+                "reference": "6b9cf2bc1f9daf9d5c14648dd720ff3d3b865934",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Itstructure\\GridView\\GridViewServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Itstructure\\GridView\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Girnik",
+                    "email": "girnikandrey@gmail.com"
+                }
+            ],
+            "description": "Grid view for laravel framework",
+            "keywords": [
+                "grid",
+                "gridview",
+                "laravel",
+                "table",
+                "view"
+            ],
+            "time": "2020-07-10T04:55:02+00:00"
+        },
+        {
+            "name": "itstructure/laravel-rbac",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itstructure/laravel-rbac.git",
+                "reference": "f8f0f3c57673a227b763cbcfe31362e11299bc9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itstructure/laravel-rbac/zipball/f8f0f3c57673a227b763cbcfe31362e11299bc9b",
+                "reference": "f8f0f3c57673a227b763cbcfe31362e11299bc9b",
+                "shasum": ""
+            },
+            "require": {
+                "itstructure/laravel-grid-view": "~1.0.4",
+                "laravel/framework": "^6.0|^7.0",
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Itstructure\\LaRbac\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Girnik",
+                    "email": "girnikandrey@gmail.com",
+                    "homepage": "https://github.com/itstructure",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel package for RBAC manage",
+            "keywords": [
+                "laravel",
+                "permission",
+                "rbac",
+                "role"
+            ],
+            "time": "2020-07-13T15:13:38+00:00"
         },
         {
             "name": "laravel/framework",
