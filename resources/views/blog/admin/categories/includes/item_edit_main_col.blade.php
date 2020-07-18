@@ -54,9 +54,7 @@
                                       id="description"
                                       class="form-control"
                                       rows="3"
-                            >
-                                 {{ $item->description }}
-                            </textarea>
+                            >{{ $item->description }}</textarea>
                         </div>
                     </div>
                 </div>
