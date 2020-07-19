@@ -9,24 +9,37 @@ use App\Repositories\BlogCategoryRepository;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoryController extends BaseController
 {
+
+    /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index()
     {
-        $paginator = BlogCategory::paginate(5);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
         return view('blog.admin.categories.index', compact('paginator'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -78,16 +91,16 @@ class CategoryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Factory|\Illuminate\View\View
+     * @return Factory|View
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
-        $item = $categoryRepository->getEdit($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if (empty($item)) {
             abort(404);
         }
 
-        $categoryList = $categoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit', compact('item', 'categoryList'));
 
@@ -96,34 +109,14 @@ class CategoryController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param BlogCategoryUpdateRequest $request
      * @param int $id
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-//        $rules = [
-//            'title' => 'required|min:5|max:200',
-//            'slug' => 'max:200',
-//            'description' => 'string|max:500|min:5',
-//            'parent_id' => 'required|integer|exists:blog_categories,id',
-//        ];
-//
-//        $validator = \Validator::make($request->all(), $rules);
-//
-//        $validatedData[] = $validator->passes();
-//        $validatedData[] = $validator->valid();
-//        $validatedData[] = $validator->failed();
-//        $validatedData[] = $validator->errors();
-//        $validatedData[] = $validator->fails();
-//
-//        dd($validatedData);
-//        $validatedData = $this->validate($request, $rules);
-//
-//       // dd($validatedData);
 
-        $item = BlogCategory::find($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         //dd($item);
         if (empty($item)) {
             return back()
