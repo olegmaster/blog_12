@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlogCategory extends Model
 {
     use SoftDeletes;
-    
+
     protected $fillable
         = [
             'parent_id',
@@ -16,4 +16,5 @@ class BlogCategory extends Model
             'title',
             'description'
         ];
+
 }

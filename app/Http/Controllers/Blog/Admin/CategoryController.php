@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
+use App\Repositories\BlogCategoryRepository;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
@@ -11,7 +15,7 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -22,22 +26,51 @@ class CategoryController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View
      */
     public function create()
     {
-        return view('blog.admin.categories.create');
+        $item = new BlogCategory();
+        $categoryList = BlogCategory::all();
+
+        return view('blog.admin.categories.edit',
+            compact('item', 'categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param BlogCategoryCreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request)
     {
-        BlogCategory::create($request->all());
+        $data = $request->input();
+        if (empty($data['slug'])) {
+            $data['slug'] = str_slug($data['title']);
+        }
+
+        // Creates object with no adding to DB
+//        $item = new BlogCategory($data);
+//
+//        $item->save();
+
+        $item = (new BlogCategory())->create($data);
+
+
+        //   dd($item);
+
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.categories.edit', [$item->id])
+                ->with(['success' => 'Успешно сохранено'])
+                ->withInput();
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
+
     }
 
 
@@ -45,12 +78,16 @@ class CategoryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        $item = BlogCategory::findOrfail($id);
-        $categoryList = BlogCategory::all();
+        $item = $categoryRepository->getEdit($id);
+        if (empty($item)) {
+            abort(404);
+        }
+
+        $categoryList = $categoryRepository->getForComboBox();
 
         return view('blog.admin.categories.edit', compact('item', 'categoryList'));
 
@@ -61,19 +98,19 @@ class CategoryController extends BaseController
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        $rules = [
-            'title' => 'required|min:5|max:200',
-            'slug' => 'max:200',
-            'description' => 'string|max:500|min:5',
-            'parent_id' => 'required|integer|exists:blog_categories,id',
-        ];
-
-  //      $validator = \Validator::make($request->all(), $rules);
+//        $rules = [
+//            'title' => 'required|min:5|max:200',
+//            'slug' => 'max:200',
+//            'description' => 'string|max:500|min:5',
+//            'parent_id' => 'required|integer|exists:blog_categories,id',
+//        ];
+//
+//        $validator = \Validator::make($request->all(), $rules);
 //
 //        $validatedData[] = $validator->passes();
 //        $validatedData[] = $validator->valid();
@@ -82,9 +119,9 @@ class CategoryController extends BaseController
 //        $validatedData[] = $validator->fails();
 //
 //        dd($validatedData);
-        $validatedData = $this->validate($request, $rules);
-
-       // dd($validatedData);
+//        $validatedData = $this->validate($request, $rules);
+//
+//       // dd($validatedData);
 
         $item = BlogCategory::find($id);
         //dd($item);
