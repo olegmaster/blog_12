@@ -40,6 +40,11 @@ class BlogPostRepository extends CoreRepository
             ->startConditions()
             ->select($fields)
             ->orderBy('id', 'DESC')
+            //->with(['category', 'user'])
+            ->with([
+                'user:id,name',
+                'category:id,title',
+            ])
             ->paginate(25);
 
         return $result;
