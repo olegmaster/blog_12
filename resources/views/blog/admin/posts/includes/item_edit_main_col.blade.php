@@ -1,5 +1,5 @@
 @php
-    /** @var \App\Models\BlogCategory $item */
+    /** @var \App\Models\\App\Models\BlogPost $item */
 @endphp
 <div class="row justify-content-center">
     <div class="col-md-12">
@@ -9,6 +9,9 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#maindata" role="tab">Основные данные</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#adddata" role="tab">Доп. данные</a>
                     </li>
                 </ul>
                 <br>
@@ -23,15 +26,21 @@
                                    minlength="3"
                                    required>
                         </div>
+
+
+                    </div>
+                    <div class="tab-pane fade" id="adddata" role="tabpanel">
                         <div class="form-group">
-                            <label for="slug">Идентификатор</label>
-                            <input name="slug" value="{{ $item->slug }}"
-                                   id="slug"
+                            <label for="title">Заголовок</label>
+                            <input name="title" value="{{ $item->title }}"
+                                   id="title"
                                    type="text"
-                                   class="form-control">
+                                   class="form-control"
+                                   minlength="3"
+                                   required>
                         </div>
                         <div class="form-group">
-                            <label for="parent_id">Родитель</label>
+                            <label for="parent_id">Категория</label>
                             <select name="parent_id"
                                     id="parent_id"
                                     type="text"
@@ -40,6 +49,7 @@
                                     required
                             >
                                 @foreach($categoryList as $categoryOption)
+
                                     <option value="{{ $categoryOption->id }}"
                                             @if($categoryOption->id == $item->parent_id) selected @endif>
                                         {{ $categoryOption->id_title }}
@@ -49,7 +59,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="description">Описание</label>
+                            <label for="slug">Идентификатор</label>
+                            <input name="slug" value="{{ $item->slug }}"
+                                   id="slug"
+                                   type="text"
+                                   class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Выдержка</label>
                             <textarea name="description"
                                       id="description"
                                       class="form-control"
