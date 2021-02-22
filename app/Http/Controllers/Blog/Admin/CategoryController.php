@@ -63,15 +63,8 @@ class CategoryController extends BaseController
             $data['slug'] = str_slug($data['title']);
         }
 
-        // Creates object with no adding to DB
-//        $item = new BlogCategory($data);
-//
-//        $item->save();
-
         $item = (new BlogCategory())->create($data);
 
-
-        //   dd($item);
 
         if ($item) {
             return redirect()
@@ -117,7 +110,6 @@ class CategoryController extends BaseController
     {
 
         $item = $this->blogCategoryRepository->getEdit($id);
-        //dd($item);
         if (empty($item)) {
             return back()
                 ->withErrors(['msg' => "Запись с id=[" . $id . "] не найдена "])
